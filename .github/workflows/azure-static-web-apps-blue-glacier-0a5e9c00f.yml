@@ -1,46 +1,59 @@
-name: Azure Static Web Apps CI/CD
+
+name: Azure Static Web Apps CI/CD (blue-glacier)
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
     types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
+    branches: [ main ]
+
+# Explicit least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 
 jobs:
   build_and_deploy_job:
+    # Run on pushes and on PR open/sync/reopen (not when PR is closed)
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
       - name: Build And Deploy
         id: builddeploy
+        # Use version tag for quick validation; we can pin to a SHA after a successful run
         uses: Azure/static-web-apps-deploy@v1
         with:
+          # IMPORTANT: This secret must exist in the repo with the current deployment token for the SWA linked in Azure
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_GLACIER_0A5E9C00F }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Enables PR comment integration
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+
+          # --- Static site configuration (no framework build) ---
+          app_location: "/"           # Root of your site (index.html, styles.css, script.js, images/)
+          api_location: ""            # No API folder
+          output_location: ""         # No build output folder for static sites
+
+          # --- Explicitly disable optional Data API path ---
+          data_api_location: ""       # Ensures the action doesn't look for swa-db-connections
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
+
     steps:
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_GLACIER_0A5E9C00F }}
-          action: "close"
+          action

@@ -178,7 +178,17 @@ function renderLocations() {
         placeholder.textContent = `[${chart.type.toUpperCase()} CHART: ${chart.title}]`
         this.parentNode.replaceChild(placeholder, this)
       }
-      chartCard.appendChild(chartImage)
+            chartCard.appendChild(chartImage)
+
+            // Bottom-right annotation to indicate no negative selections
+            // Skip adding on Instructor charts (image filename ends with "Instructor.png")
+            const isInstructorChart = /Instructor\.png$/i.test(chart.imageUrl)
+            if (!isInstructorChart) {
+                const annotations = document.createElement("div")
+                annotations.className = "chart-annotations"
+                annotations.innerHTML = "Neutral [0]<br>Disagree [0]<br>Strongly Disagree [0]"
+                chartCard.appendChild(annotations)
+            }
 
       resultsGrid.appendChild(chartCard)
     })

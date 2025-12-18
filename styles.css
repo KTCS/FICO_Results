@@ -219,6 +219,13 @@ body {
   background-color: #873894;
 }
 
+/* Bangalore annotations: orange badge */
+.location-result:nth-child(2) .chart-annotations {
+  background-color: #fdb62a;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
 /* Guadalajara specific styling */
 .location-result:nth-child(3) {
   background: #007b84;
@@ -304,6 +311,7 @@ body {
   background-color: #215f94;
   padding: 24px;
   border-radius: 8px;
+  position: relative;
 }
 
 .chart-title {
@@ -329,6 +337,17 @@ body {
   justify-content: center;
   color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
+}
+
+/* Chart annotations overlay (bottom-right) */
+.chart-annotations {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: right;
 }
 
 .testimonials {

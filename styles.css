@@ -387,4 +387,64 @@ body {
   .location-title {
     font-size: 32px;
   }
+}  /* <-- CLOSE the media query here */
+
+/* === Header action buttons: make <a> look like <button> and align consistently === */
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 24px; /* keep your existing spacing */
+}
+
+/* Base “button look” applied to both the existing <button> and the new <a> */
+.header-actions .btn,
+.header-actions button,
+.header-actions .btn-voice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;        /* for <a> */
+  cursor: pointer;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  color: #333;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+/* Hover/active parity */
+.header-actions .btn:hover,
+.header-actions button:hover,
+.header-actions .btn-voice:hover {
+  background-color: #f0f0f0;
+}
+
+.header-actions .btn:active,
+.header-actions button:active,
+.header-actions .btn-voice:active {
+  transform: translateY(1px);
+}
+
+/* Focus-visible for accessibility (keyboard users) */
+.header-actions .btn:focus-visible,
+.header-actions button:focus-visible,
+.header-actions .btn-voice:focus-visible {
+  outline: 2px solid #0078d4;
+  outline-offset: 2px;
+}
+
+/* Optional: give the Voice link a branded accent color variant */
+.header-actions .btn-voice {
+  background: #215f94;
+  border-color: #1a4b74;
+  color: #fff;
+}
+
+.header-actions .btn-voice:hover {
+  background: #1a4b74;
 }

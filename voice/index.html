@@ -429,8 +429,17 @@ function VoiceDiscoveryApp() {
     container: { maxWidth: 800, margin: "0 auto", padding: "32px 24px" },
   };
 
-  // ─── TEMPLATE SELECTOR ───
+  // ─── LANDING PAGE WITH ABOUT, TEMPLATES, AND ROADMAP ───
   if (!selectedTemplate) {
+    const roadmapItems = [
+      { icon: "🎓", title: "Training Concierge Voice Intake", desc: "KTCS's flagship Training Concierge Service, trusted by organizations for 28 years, is coming to the Voice Platform. Instead of filling out a training request form, requestors simply describe what they need. In Guided mode, an AI-powered conversation walks the requestor through structured questions covering skills gaps, target audience, preferred format, timeline, budget constraints, and compliance requirements, ensuring nothing critical is missed. In Free-Form mode, the requestor tells their story naturally, and the AI listens, maps what was said to the structured requirements, and then intelligently prompts follow-up questions for anything that was not covered. Either way, the result is a complete, structured learning requirements document that KTCS can act on immediately. From there, KTCS does what we do best: search for the best-fit training content, match the right instructor or learning vendor (vetted and qualified by KTCS), and deliver at the right date, time, and most cost-effective rate. For companies whose internal learning teams do not offer a specific course, the Training Concierge Voice Intake makes it effortless to route external training requests through KTCS and get clarity on requirements before the search even begins.", highlight: true },
+      { icon: "🌍", title: "Enhanced Speech Recognition", desc: "Improved accuracy for diverse accents, multilingual support, and noisy environments." },
+      { icon: "🤖", title: "AI-Powered Summaries", desc: "Automatic organization of voice responses into structured findings, key takeaways, and recommended action items." },
+      { icon: "🎨", title: "Custom Branded Templates", desc: "Create your own question sets for any use case, including training programs, audits, assessments, interviews, and client onboarding." },
+      { icon: "📄", title: "Exportable Reports", desc: "Output that feeds directly into your project documents, proposals, and deliverables." },
+      { icon: "👥", title: "Team Collaboration", desc: "Multi-facilitator sessions and shared response libraries." },
+    ];
+
     return (
       <div style={styles.app}>
         <style>{`
@@ -438,50 +447,153 @@ function VoiceDiscoveryApp() {
           * { box-sizing: border-box; margin: 0; padding: 0; }
           @keyframes float-in { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
           @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+          html { scroll-behavior: smooth; }
         `}</style>
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "60px 24px" }}>
-          <div style={{ textAlign: "center", marginBottom: 60, animation: "float-in 0.8s ease-out" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: 3, color: "#6c7a89", textTransform: "uppercase", marginBottom: 16, fontFamily: "'DM Sans'" }}>KTCS Voice Platform</div>
+
+          {/* ── HERO ── */}
+          <div style={{ textAlign: "center", marginBottom: 48, animation: "float-in 0.8s ease-out" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: 3, color: "#6c7a89", textTransform: "uppercase", marginBottom: 16 }}>KTCS Voice Platform</div>
             <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, color: "#e8e8f0", lineHeight: 1.15, marginBottom: 16 }}>
               Capture insights,<br />not keystrokes.
             </h1>
-            <p style={{ fontSize: 18, color: "#8899aa", maxWidth: 500, margin: "0 auto", lineHeight: 1.6 }}>
-              Select a template to start a voice-guided discovery session. Speak naturally — we'll structure it for you.
+            <p style={{ fontSize: 18, color: "#8899aa", maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>
+              The KTCS Voice Platform turns conversations into structured, actionable documentation. Instead of asking clients, trainees, or stakeholders to fill out forms and type responses, they simply speak, and the platform organizes their answers into a clear, professional summary mapped to whatever framework you are using.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-            {Object.values(TEMPLATES).map((t, i) => (
-              <button
-                key={t.id}
-                onClick={() => setSelectedTemplate(t.id)}
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: `1px solid rgba(255,255,255,0.08)`,
-                  borderRadius: 16,
-                  padding: "32px 28px",
-                  textAlign: "left",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  animation: `float-in 0.6s ease-out ${0.2 + i * 0.15}s both`,
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = `${t.brandColor}18`; e.currentTarget.style.borderColor = `${t.brandColor}40`; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.transform = "translateY(0)"; }}
-              >
-                <div style={{ width: 48, height: 48, borderRadius: 12, background: `${t.brandColor}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, marginBottom: 20 }}>
-                  {t.phases[0]?.icon || "📋"}
-                </div>
-                <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, color: t.accentColor, textTransform: "uppercase", marginBottom: 8 }}>{t.subtitle}</div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: "#e0e0e8", marginBottom: 10, fontFamily: "'Fraunces', serif" }}>{t.title}</h3>
-                <p style={{ fontSize: 14, color: "#7a8a9a", lineHeight: 1.5 }}>{t.description}</p>
-                <div style={{ marginTop: 16, fontSize: 13, color: "#5a6a7a" }}>
-                  {t.phases.length} phases · {t.phases.reduce((s, p) => s + p.questions.length, 0)} questions
-                </div>
-              </button>
+          {/* ── SCROLL NAV ── */}
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 56, animation: "float-in 0.8s ease-out 0.1s both", flexWrap: "wrap" }}>
+            {[
+              { label: "How It Works", anchor: "#how-it-works" },
+              { label: "Templates", anchor: "#templates" },
+              { label: "What's Coming", anchor: "#roadmap" },
+            ].map((nav) => (
+              <a key={nav.label} href={nav.anchor} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "8px 20px", fontSize: 13, fontWeight: 600, color: "#8899aa", textDecoration: "none", transition: "all 0.2s ease" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "#c0d0e0"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "#8899aa"; }}
+              >{nav.label}</a>
             ))}
           </div>
+
+          {/* ── WHAT IS IT ── */}
+          <div style={{ marginBottom: 64, animation: "float-in 0.6s ease-out 0.15s both" }}>
+            <p style={{ fontSize: 16, color: "#8899aa", lineHeight: 1.8, maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+              Whether it is a client discovery session, a problem-solving workshop, or a training intake, the Voice Platform removes friction from data collection so people can focus on thinking, not typing.
+            </p>
+          </div>
+
+          {/* ── HOW IT WORKS ── */}
+          <div id="how-it-works" style={{ marginBottom: 64, animation: "float-in 0.6s ease-out 0.2s both" }}>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#2E75B6", textTransform: "uppercase", marginBottom: 8 }}>How It Works</div>
+              <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 28, fontWeight: 700, color: "#e0e0e8", marginBottom: 16 }}>Simple by design</h2>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 32 }}>
+              {[
+                { step: "1", icon: "📋", title: "Select a template", desc: "Choose a pre-built question set for your use case." },
+                { step: "2", icon: "🎯", title: "Choose your mode", desc: "Guided walks you through one question at a time. Free-Form lets you tell the whole story." },
+                { step: "3", icon: "🎙️", title: "Speak naturally", desc: "Tap the microphone and talk. Responses are captured and associated with the right questions in real-time." },
+                { step: "4", icon: "✨", title: "Get your summary", desc: "The platform produces a structured summary you can immediately use in your project documentation." },
+              ].map((s, i) => (
+                <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "28px 22px", textAlign: "center" }}>
+                  <div style={{ fontSize: 28, marginBottom: 12 }}>{s.icon}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: "#2E75B6", textTransform: "uppercase", marginBottom: 6 }}>Step {s.step}</div>
+                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#d0d8e0", marginBottom: 8, fontFamily: "'Fraunces', serif" }}>{s.title}</h3>
+                  <p style={{ fontSize: 13, color: "#7a8a9a", lineHeight: 1.5 }}>{s.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Accessible by Design callout */}
+            <div style={{ background: "rgba(46,117,182,0.08)", border: "1px solid rgba(46,117,182,0.2)", borderRadius: 14, padding: "24px 28px", display: "flex", alignItems: "flex-start", gap: 16 }}>
+              <span style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>♿</span>
+              <div>
+                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#c0d8f0", marginBottom: 6, fontFamily: "'Fraunces', serif" }}>Accessible by Design</h4>
+                <p style={{ fontSize: 14, color: "#8899aa", lineHeight: 1.6 }}>Every question accepts both voice and typed responses, so participants can use whichever input method is most comfortable for them. Whether someone prefers to speak, type, or switch between the two, the platform adapts to how they work.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ── AVAILABLE TEMPLATES ── */}
+          <div id="templates" style={{ marginBottom: 64 }}>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#2E75B6", textTransform: "uppercase", marginBottom: 8 }}>Available Templates</div>
+              <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 28, fontWeight: 700, color: "#e0e0e8", marginBottom: 8 }}>Ready to use</h2>
+              <p style={{ fontSize: 15, color: "#7a8a9a" }}>Select a template to start a voice-guided discovery session.</p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+              {Object.values(TEMPLATES).map((t, i) => (
+                <button
+                  key={t.id}
+                  onClick={() => setSelectedTemplate(t.id)}
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: 16,
+                    padding: "32px 28px",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    animation: `float-in 0.6s ease-out ${0.3 + i * 0.15}s both`,
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${t.brandColor}18`; e.currentTarget.style.borderColor = `${t.brandColor}40`; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: `${t.brandColor}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, marginBottom: 20 }}>
+                    {t.phases[0]?.icon || "📋"}
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, color: t.accentColor, textTransform: "uppercase", marginBottom: 8 }}>{t.subtitle}</div>
+                  <h3 style={{ fontSize: 20, fontWeight: 700, color: "#e0e0e8", marginBottom: 10, fontFamily: "'Fraunces', serif" }}>{t.title}</h3>
+                  <p style={{ fontSize: 14, color: "#7a8a9a", lineHeight: 1.5 }}>{t.description}</p>
+                  <div style={{ marginTop: 16, fontSize: 13, color: "#5a6a7a" }}>
+                    {t.phases.length} phases · {t.phases.reduce((s, p) => s + p.questions.length, 0)} questions
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── WHAT'S COMING / ROADMAP ── */}
+          <div id="roadmap" style={{ marginBottom: 64 }}>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#2E75B6", textTransform: "uppercase", marginBottom: 8 }}>What's Coming</div>
+              <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 28, fontWeight: 700, color: "#e0e0e8" }}>The roadmap</h2>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {roadmapItems.map((item, i) => (
+                <div key={i} style={{
+                  background: item.highlight ? "rgba(46,117,182,0.08)" : "rgba(255,255,255,0.03)",
+                  border: `1px solid ${item.highlight ? "rgba(46,117,182,0.25)" : "rgba(255,255,255,0.07)"}`,
+                  borderRadius: 14,
+                  padding: item.highlight ? "28px 28px" : "20px 24px",
+                  animation: `float-in 0.5s ease-out ${0.4 + i * 0.1}s both`,
+                }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+                    <span style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>{item.icon}</span>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                        <h3 style={{ fontSize: item.highlight ? 18 : 16, fontWeight: 700, color: item.highlight ? "#c0d8f0" : "#d0d8e0", fontFamily: "'Fraunces', serif" }}>{item.title}</h3>
+                        {item.highlight && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.5, color: "#2E75B6", textTransform: "uppercase", background: "rgba(46,117,182,0.15)", padding: "3px 10px", borderRadius: 20 }}>Flagship</span>}
+                      </div>
+                      <p style={{ fontSize: item.highlight ? 14 : 13, color: "#8899aa", lineHeight: 1.7 }}>{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── FOOTER ── */}
+          <div style={{ textAlign: "center", padding: "32px 0", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <p style={{ fontSize: 13, color: "#4a5a6a" }}>© 2026 KTCS — Knowledge Transfer Consulting Services</p>
+          </div>
+
         </div>
       </div>
     );
